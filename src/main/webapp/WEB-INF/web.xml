@@ -3,5 +3,47 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+	<display-name>Archetype Created Web Application</display-name>
+
+	<filter>
+		<filter-name>AuthenticationChecker</filter-name>
+		<filter-class>com.pahana.util.AuthenticationChecker</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>AuthenticationChecker</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<servlet>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>com.pahana.controller.LoginController</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>DashboardController</servlet-name>
+		<servlet-class>com.pahana.controller.DashboardController</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>LogoutController</servlet-name>
+		<servlet-class>com.pahana.controller.LogoutController</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DashboardController</servlet-name>
+		<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LogoutController</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
 </web-app>
