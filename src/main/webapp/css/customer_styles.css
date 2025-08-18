@@ -419,33 +419,24 @@ body {
     overflow: auto;
 }
 
-.table-wrapper,
-.scroll-body {
+.table-wrapper, .scroll-body {
     scrollbar-color: #444 #0f0f0f;
     scrollbar-width: thin;
 }
-
-.table-wrapper::-webkit-scrollbar,
-.scroll-body::-webkit-scrollbar {
+.table-wrapper::-webkit-scrollbar, .scroll-body::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
-
-.table-wrapper::-webkit-scrollbar-track,
-.scroll-body::-webkit-scrollbar-track {
+.table-wrapper::-webkit-scrollbar-track, .scroll-body::-webkit-scrollbar-track {
     background: #0f0f0f;
     border: 1px solid #222222;
     border-radius: 8px;
 }
-
-.table-wrapper::-webkit-scrollbar-thumb,
-.scroll-body::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(102, 126, 234, 0.35), rgba(118, 75, 162, 0.35)), #333333;
+.table-wrapper::-webkit-scrollbar-thumb, .scroll-body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(102,126,234,0.35), rgba(118,75,162,0.35)), #333333;
     border: 1px solid #3a3a3a;
     border-radius: 8px;
 }
-
-.table-wrapper::-webkit-scrollbar-thumb:hover,
-.scroll-body::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(102, 126, 234, 0.55), rgba(118, 75, 162, 0.55)), #444444;
+.table-wrapper::-webkit-scrollbar-thumb:hover, .scroll-body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(102,126,234,0.55), rgba(118,75,162,0.55)), #444444;
 }

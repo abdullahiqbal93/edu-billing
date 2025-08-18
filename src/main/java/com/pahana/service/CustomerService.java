@@ -33,6 +33,10 @@ public class CustomerService {
         return customerDAO.getAllCustomers();
     }
 
+    public List<Customer> searchCustomers(String term) {
+        return customerDAO.searchCustomers(term);
+    }
+
     public Customer findCustomerById(int id) {
         return customerDAO.findById(id);
     }

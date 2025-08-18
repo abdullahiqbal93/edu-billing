@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/customer_styles.css">
 </head>
 <body>
+	<%@ include file="_toast.jspf" %>
 	<div class="bg-decoration"></div>
 	<div class="container">
 		<header class="header">
@@ -91,6 +92,14 @@
 		<div class="table-section">
 			<div class="table-header">
 				<h2 class="table-title">Customer List</h2>
+				<form method="get" action="customer">
+					<input type="hidden" name="action" value="list" />
+					<div class="input-group" style="display:flex; gap:12px; align-items:center; margin-top:12px;">
+						<input type="text" name="q" class="form-input" placeholder="Search by name, account, address, phone, email" value="<%= request.getAttribute("q") != null ? request.getAttribute("q") : (request.getParameter("q") != null ? request.getParameter("q") : "") %>" />
+						<button type="submit" class="form-button">Search</button>
+						<a href="customer?action=list" class="back-btn">Clear</a>
+					</div>
+				</form>
 			</div>
 
 			<div class="table-wrapper">
