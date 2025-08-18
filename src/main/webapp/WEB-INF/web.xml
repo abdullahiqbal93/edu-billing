@@ -31,6 +31,11 @@
 		<servlet-class>com.pahana.controller.LogoutController</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>CustomerController</servlet-name>
+		<servlet-class>com.pahana.controller.CustomerController</servlet-class>
+	</servlet>
+
 
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
@@ -45,5 +50,10 @@
 	<servlet-mapping>
 		<servlet-name>LogoutController</servlet-name>
 		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CustomerController</servlet-name>
+		<url-pattern>/customer</url-pattern>
 	</servlet-mapping>
 </web-app>
