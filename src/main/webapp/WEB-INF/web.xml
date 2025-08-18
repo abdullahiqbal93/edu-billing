@@ -41,6 +41,11 @@
 		<servlet-class>com.pahana.controller.ItemController</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>HelpController</servlet-name>
+		<servlet-class>com.pahana.controller.HelpController</servlet-class>
+	</servlet>
+
 
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
@@ -65,5 +70,10 @@
 	<servlet-mapping>
 		<servlet-name>ItemController</servlet-name>
 		<url-pattern>/item</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>HelpController</servlet-name>
+		<url-pattern>/help</url-pattern>
 	</servlet-mapping>
 </web-app>
