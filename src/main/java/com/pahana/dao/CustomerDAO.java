@@ -55,6 +55,29 @@ public class CustomerDAO {
         return customers;
     }
 
+    public List<Customer> searchCustomers(String term) {
+        List<Customer> customers = new ArrayList<>();
+        if (term == null)
+            term = "";
+        String like = "%" + term.trim() + "%";
+        String query = "SELECT * FROM customers WHERE name LIKE ? OR account_number LIKE ? OR address LIKE ? OR telephone LIKE ? OR email LIKE ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, like);
+            ps.setString(2, like);
+            ps.setString(3, like);
+            ps.setString(4, like);
+            ps.setString(5, like);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    customers.add(mapRowToCustomer(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
+
     public Customer findById(int id) {
         String query = "SELECT * FROM customers WHERE id = ?";
         try (PreparedStatement statement = conn.prepareStatement(query)) {
