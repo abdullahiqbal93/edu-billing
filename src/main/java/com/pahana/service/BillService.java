@@ -76,12 +76,12 @@ public class BillService {
         sb.append("</tbody></table>");
         sb.append(
                 "<div style='margin-top:10px;border-top:1px solid #eee;padding-top:8px;display:flex;justify-content:space-between'>");
-        sb.append("<div style='color:#666'>Total Units</div><div><b>").append(bill.getTotalUnits())
+        sb.append("<div style='color:#666'>Total Units: </div><div><b>").append(bill.getTotalUnits())
                 .append("</b></div>");
         sb.append("</div>");
         sb.append(
                 "<div style='margin-top:4px;border-top:1px dashed #ddd;padding-top:6px;display:flex;justify-content:space-between'>");
-        sb.append("<div style='font-weight:700'>Total Amount</div><div style='font-weight:700'>LKR ")
+        sb.append("<div style='font-weight:700'>Total Amount: </div><div style='font-weight:700'> LKR ")
                 .append(String.format("%.2f", bill.getTotalAmount())).append("</div>");
         sb.append("</div>");
         sb.append(
