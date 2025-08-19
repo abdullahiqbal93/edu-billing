@@ -25,8 +25,8 @@ public class CustomerService {
         return instance;
     }
 
-    public void addCustomer(Customer customer) {
-        customerDAO.addCustomer(customer);
+    public boolean addCustomer(Customer customer) {
+        return customerDAO.addCustomer(customer);
     }
 
     public List<Customer> getAllCustomers() {
@@ -39,6 +39,10 @@ public class CustomerService {
 
     public Customer findCustomerById(int id) {
         return customerDAO.findById(id);
+    }
+
+    public Customer findCustomerByAccountNumber(String accountNumber) {
+        return customerDAO.findByAccountNumber(accountNumber);
     }
 
     public void updateCustomer(Customer customer) {

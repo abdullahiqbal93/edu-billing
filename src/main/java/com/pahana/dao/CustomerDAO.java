@@ -25,19 +25,19 @@ public class CustomerDAO {
         return instance;
     }
 
-    public void addCustomer(Customer customer) {
-        String query = "INSERT INTO customers (account_number, name, address, telephone, email) VALUES (?, ?, ?, ?, ?) "
-                +
-                "ON DUPLICATE KEY UPDATE name = VALUES(name), address = VALUES(address), telephone = VALUES(telephone), email = VALUES(email)";
+    public boolean addCustomer(Customer customer) {
+        String query = "INSERT INTO customers (account_number, name, address, telephone, email) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, customer.getAccountNumber());
             statement.setString(2, customer.getName());
             statement.setString(3, customer.getAddress());
             statement.setString(4, customer.getTelephone());
             statement.setString(5, customer.getEmail());
-            statement.executeUpdate();
+            int rows = statement.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -82,6 +82,21 @@ public class CustomerDAO {
         String query = "SELECT * FROM customers WHERE id = ?";
         try (PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapRowToCustomer(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Customer findByAccountNumber(String accountNumber) {
+        String query = "SELECT * FROM customers WHERE account_number = ?";
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, accountNumber);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return mapRowToCustomer(resultSet);
