@@ -51,6 +51,11 @@
 		<servlet-class>com.pahana.controller.SettingsController</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>BillController</servlet-name>
+		<servlet-class>com.pahana.controller.BillController</servlet-class>
+	</servlet>
+
 
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
@@ -85,5 +90,10 @@
 	<servlet-mapping>
 		<servlet-name>SettingsController</servlet-name>
 		<url-pattern>/settings</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>BillController</servlet-name>
+		<url-pattern>/bill</url-pattern>
 	</servlet-mapping>
 </web-app>
