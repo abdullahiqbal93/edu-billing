@@ -137,6 +137,18 @@ public class CustomerController extends HttpServlet {
             return;
         }
 
+        Customer existingByAcc = customerService.findCustomerByAccountNumber(accountNumber);
+        if (existingByAcc != null) {
+            request.setAttribute("error", "Account number already exists.");
+            request.setAttribute("accountNumber", accountNumber);
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("telephone", telephone);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("WEB-INF/view/customer.jsp").forward(request, response);
+            return;
+        }
+
         Customer customer = new Customer();
         customer.setAccountNumber(accountNumber);
         customer.setName(name);
@@ -144,7 +156,17 @@ public class CustomerController extends HttpServlet {
         customer.setTelephone(telephone);
         customer.setEmail(email);
 
-        customerService.addCustomer(customer);
+        boolean created = customerService.addCustomer(customer);
+        if (!created) {
+            request.setAttribute("error", "Failed to add customer. Account number may already exist.");
+            request.setAttribute("accountNumber", accountNumber);
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("telephone", telephone);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("WEB-INF/view/customer.jsp").forward(request, response);
+            return;
+        }
         HttpSession session = request.getSession();
         session.setAttribute("success", "Customer added successfully.");
         response.sendRedirect("customer?action=list");
@@ -194,6 +216,19 @@ public class CustomerController extends HttpServlet {
 
         if (error != null) {
             request.setAttribute("error", error);
+            request.setAttribute("id", idStr);
+            request.setAttribute("accountNumber", accountNumber);
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("telephone", telephone);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("WEB-INF/view/customer.jsp").forward(request, response);
+            return;
+        }
+
+        Customer existingByAcc = customerService.findCustomerByAccountNumber(accountNumber);
+        if (existingByAcc != null && existingByAcc.getId() != id) {
+            request.setAttribute("error", "Account number already exists.");
             request.setAttribute("id", idStr);
             request.setAttribute("accountNumber", accountNumber);
             request.setAttribute("name", name);
