@@ -67,6 +67,19 @@ public class ItemDAO {
         }
     }
 
+    public boolean decrementStock(int itemId, int qty) {
+        String sql = "UPDATE items SET quantity = quantity - ? WHERE id = ? AND quantity >= ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, qty);
+            ps.setInt(2, itemId);
+            ps.setInt(3, qty);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void deleteItem(int id) {
         String query = "DELETE FROM items WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(query)) {

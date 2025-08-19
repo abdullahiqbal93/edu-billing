@@ -102,12 +102,23 @@ public class BillService {
         int billId = billDAO.addBill(bill);
         if (billId > 0) {
             billDAO.addBillItems(billId, items);
+
+            com.pahana.dao.ItemDAO itemDAO = com.pahana.dao.ItemDAO.getInstance();
+            boolean stockOk = true;
+            for (BillItem bi : items) {
+                if (!itemDAO.decrementStock(bi.getItemId(), bi.getQuantity())) {
+                    stockOk = false;
+                    break;
+                }
+            }
+
             bill = billDAO.getBillById(billId);
-            if (bill != null) {
-                bill.setItems(items);
-            } else {
+            if (bill == null) {
                 bill = new Bill(billId, customerId, totalUnits, totalAmount, null);
-                bill.setItems(items);
+            }
+            bill.setItems(items);
+            if (!stockOk) {
+                return null;
             }
         }
         return bill;
