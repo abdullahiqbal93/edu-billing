@@ -237,6 +237,7 @@
 
                 <div style="display:flex; gap:12px;">
                     <button class="print-button" onclick="printBill()" type="button">Print Receipt</button>
+                    <button class="print-button" style="background:linear-gradient(135deg,#2563eb,#0ea5e9)" type="button" id="send-receipt-btn" data-bill-id="<%= bill.getId() %>">Send Receipt</button>
                 </div>
             </div>
         </div>
@@ -314,5 +315,44 @@
         </div>
         <% } %>
     </div>
+    <script>
+        const APP_CTX = '<%=request.getContextPath()%>';
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'send-receipt-btn') {
+                const billId = e.target.getAttribute('data-bill-id');
+                sendReceipt(billId);
+            }
+        });
+
+        async function sendReceipt(billId) {
+            try {
+                const res = await fetch(APP_CTX + '/email/receipt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'billId=' + encodeURIComponent(billId)
+                });
+                if (!res.ok) {
+                    const text = await res.text();
+                    if (typeof showToast === 'function') {
+                        showToast('Failed to send receipt: ' + text, 'error');
+                    } else {
+                        alert('Failed to send receipt: ' + text);
+                    }
+                    return;
+                }
+                if (typeof showToast === 'function') {
+                    showToast('Receipt emailed successfully.');
+                } else {
+                    alert('Receipt emailed successfully.');
+                }
+            } catch (e) {
+                if (typeof showToast === 'function') {
+                    showToast('Network error while sending receipt.', 'error');
+                } else {
+                    alert('Network error while sending receipt.');
+                }
+            }
+        }
+    </script>
 </body>
 </html>
