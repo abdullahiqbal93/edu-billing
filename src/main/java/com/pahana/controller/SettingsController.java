@@ -44,6 +44,14 @@ public class SettingsController extends HttpServlet {
                 } else {
                     error = "Failed to update username (maybe already taken?).";
                 }
+            } else if ("change-password".equals(action)) {
+                String currentPassword = request.getParameter("currentPassword");
+                String newPassword = request.getParameter("newPassword");
+                if (svc.changePassword(current.getId(), currentPassword, newPassword)) {
+                    success = "Password updated.";
+                } else {
+                    error = "Failed to update password (check current password).";
+                }
             }
         } catch (Exception e) {
             error = "Unexpected error: " + e.getMessage();
