@@ -52,6 +52,55 @@ public class SettingsController extends HttpServlet {
                 } else {
                     error = "Failed to update password (check current password).";
                 }
+            } else if ("add-user".equals(action)) {
+                if (!svc.isSuperAdmin(current)) {
+                    error = "Only SUPER_ADMIN can add users.";
+                } else {
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    if (svc.addUser(username, password)) {
+                        success = "User added.";
+                    } else {
+                        error = "Failed to add user (username may exist).";
+                    }
+                }
+            } else if ("delete-user".equals(action)) {
+                if (!svc.isSuperAdmin(current)) {
+                    error = "Only SUPER_ADMIN can delete users.";
+                } else {
+                    String idStr = request.getParameter("id");
+                    try {
+                        int id = Integer.parseInt(idStr);
+                        if (id == current.getId()) {
+                            error = "You cannot delete your own account while logged in.";
+                        } else if (svc.removeUser(id)) {
+                            success = "User deleted.";
+                        } else {
+                            error = "Failed to delete user.";
+                        }
+                    } catch (NumberFormatException e) {
+                        error = "Invalid user id.";
+                    }
+                }
+            } else if ("update-role".equals(action)) {
+                if (!svc.isSuperAdmin(current)) {
+                    error = "Only SUPER_ADMIN can update roles.";
+                } else {
+                    String idStr = request.getParameter("id");
+                    String role = request.getParameter("role");
+                    try {
+                        int id = Integer.parseInt(idStr);
+                        if (id == current.getId() && "ADMIN".equals(role)) {
+                            error = "You cannot demote yourself from SUPER_ADMIN.";
+                        } else if (svc.updateRole(id, role)) {
+                            success = "Role updated.";
+                        } else {
+                            error = "Failed to update role.";
+                        }
+                    } catch (NumberFormatException e) {
+                        error = "Invalid user id.";
+                    }
+                }
             }
         } catch (Exception e) {
             error = "Unexpected error: " + e.getMessage();
