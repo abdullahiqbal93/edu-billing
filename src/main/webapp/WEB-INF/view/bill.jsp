@@ -22,7 +22,7 @@
             tr.parentNode.removeChild(tr);
             updateTotals();
         }
-        function updateLineTotal(tr) {
+    function updateLineTotal(tr) {
             const qty = parseFloat(tr.querySelector('input[name="quantity"]').value || '0');
             const up = parseFloat(tr.querySelector('input[name="unitPrice"]').value || '0');
             tr.querySelector('.line-total').textContent = (qty * up).toFixed(2);
@@ -42,6 +42,17 @@
         document.addEventListener('input', (e) => {
             if (e.target && (e.target.name === 'quantity' || e.target.name === 'unitPrice')) {
                 const tr = e.target.closest('tr');
+                if (e.target.name === 'quantity') {
+                    const sel = tr.querySelector('select[name="itemId"]');
+                    const opt = sel ? sel.options[sel.selectedIndex] : null;
+                    const max = opt ? parseInt(opt.getAttribute('data-stock') || '0') : 0;
+                    const input = e.target;
+                    let val = parseInt(input.value || '0');
+                    if (max > 0) { input.max = String(max); }
+                    if (!isNaN(val) && max > 0 && val > max) {
+                        input.value = String(max);
+                    }
+                }
                 updateLineTotal(tr); updateTotals();
             }
         });
@@ -51,7 +62,16 @@
                 const price = opt ? parseFloat(opt.getAttribute('data-price') || '0') : 0;
                 const tr = e.target.closest('tr');
                 const upInput = tr.querySelector('input[name="unitPrice"]');
+                const qtyInput = tr.querySelector('input[name="quantity"]');
                 if (upInput) { upInput.value = price.toFixed(2); }
+                const maxStock = opt ? parseInt(opt.getAttribute('data-stock') || '0') : 0;
+                if (qtyInput) {
+                    if (maxStock > 0) { qtyInput.max = String(maxStock); }
+                    let current = parseInt(qtyInput.value || '0');
+                    if (!isNaN(current) && maxStock > 0 && current > maxStock) {
+                        qtyInput.value = String(maxStock);
+                    }
+                }
                 updateLineTotal(tr); updateTotals();
             }
         });
@@ -136,15 +156,18 @@
             <template id="bill-item-row-template">
                 <tr>
                     <td>
-                        <select name="itemId" class="form-select">
+            <select name="itemId" class="form-select">
                             <option value="">Select Item</option>
                             <% java.util.List<com.pahana.model.Item> items = (java.util.List<com.pahana.model.Item>) request.getAttribute("items");
-                               if (items != null) { for (com.pahana.model.Item it : items) { %>
-                                <option value="<%=it.getId()%>" data-price="<%= String.format("%.2f", it.getPrice()) %>"><%=it.getName()%></option>
+                               if (items != null) { for (com.pahana.model.Item it : items) { 
+                                   boolean outOfStock = it.getQuantity() <= 0; %>
+                                <option value="<%=it.getId()%>" data-price="<%= String.format("%.2f", it.getPrice()) %>" data-stock="<%= it.getQuantity() %>" <%= outOfStock ? "disabled" : "" %>>
+                                    <%=it.getName()%> <%= outOfStock ? "(out of stock)" : "(stock: " + it.getQuantity() + ")" %>
+                                </option>
                             <% } } %>
                         </select>
                     </td>
-                    <td><input type="number" name="quantity" class="form-input" min="1" step="1" value="1" /></td>
+            <td><input type="number" name="quantity" class="form-input" min="1" step="1" value="1" /></td>
                     <td><input type="number" name="unitPrice" class="form-input" min="0" step="0.01" value="0.00" /></td>
                     <td>LKR <span class="line-total">0.00</span></td>
                     <td><button type="button" class="action-btn delete-btn" onclick="removeRow(this)">Remove</button></td>
@@ -269,17 +292,14 @@
                                 <th>Created At</th>
                                 <th>Total Units</th>
                             <th>Total (LKR)</th>
-                            <%
-                                com.pahana.model.User _user = (com.pahana.model.User) session.getAttribute("user");
-                                boolean _isSuper = _user != null && "SUPER_ADMIN".equals(_user.getRole());
-                                if (_isSuper) {
-                            %>
                             <th>Actions</th>
-                            <% } %>
                         </tr>
                     </thead>
                     <tbody>
-                    <% for (Bill b : bills) { %>
+                    <%
+                        com.pahana.model.User _user = (com.pahana.model.User) session.getAttribute("user");
+                        boolean _isSuper = _user != null && "SUPER_ADMIN".equals(_user.getRole());
+                        for (Bill b : bills) { %>
                         <tr>
                             <td><%=b.getId()%></td>
                             <td><%=b.getCustomerId()%></td>
@@ -287,13 +307,14 @@
                             <td><%=b.getCreatedAt()%></td>
                             <td><%=b.getTotalUnits()%></td>
                             <td><%= String.format("%.2f", b.getTotalAmount()) %></td>
-                            <% if (_isSuper) { %>
                             <td>
                                 <div class="actions">
+                                    <a href="bill?action=view&id=<%=b.getId()%>" class="action-btn view-btn">View</a>
+                                    <% if (_isSuper) { %>
                                     <a href="bill?action=delete&id=<%=b.getId()%>" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this bill?');">Delete</a>
+                                    <% } %>
                                 </div>
                             </td>
-                            <% } %>
                         </tr>
                     <% } %>
                     </tbody>

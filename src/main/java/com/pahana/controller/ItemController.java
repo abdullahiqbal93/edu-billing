@@ -120,8 +120,8 @@ public class ItemController extends HttpServlet {
         if (error == null) {
             try {
                 price = Double.parseDouble(priceStr);
-                if (price < 0) {
-                    error = "Price must be non-negative.";
+                if (price <= 0) {
+                    error = "Price must be greater than 0.";
                 }
             } catch (NumberFormatException e) {
                 error = "Invalid price format.";
@@ -130,8 +130,8 @@ public class ItemController extends HttpServlet {
         if (error == null) {
             try {
                 quantity = Integer.parseInt(quantityStr);
-                if (quantity < 0) {
-                    error = "Quantity must be non-negative.";
+                if (quantity <= 0) {
+                    error = "Quantity must be greater than 0.";
                 }
             } catch (NumberFormatException e) {
                 error = "Invalid quantity format.";
@@ -186,8 +186,8 @@ public class ItemController extends HttpServlet {
         if (error == null) {
             try {
                 price = Double.parseDouble(priceStr);
-                if (price < 0) {
-                    error = "Price must be non-negative.";
+                if (price <= 0) {
+                    error = "Price must be greater than 0.";
                 }
             } catch (NumberFormatException e) {
                 error = "Invalid price format.";
@@ -196,8 +196,8 @@ public class ItemController extends HttpServlet {
         if (error == null) {
             try {
                 quantity = Integer.parseInt(quantityStr);
-                if (quantity < 0) {
-                    error = "Quantity must be non-negative.";
+                if (quantity <= 0) {
+                    error = "Quantity must be greater than 0.";
                 }
             } catch (NumberFormatException e) {
                 error = "Invalid quantity format.";

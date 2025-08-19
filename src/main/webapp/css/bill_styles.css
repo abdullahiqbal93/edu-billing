@@ -881,6 +881,20 @@ body {
     gap: 4px;
 }
 
+.view-btn {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9) !important;
+    border: none !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.view-btn:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.45);
+}
+
+
 .delete-btn {
     background: rgba(220, 38, 38, 0.1);
     border: 1px solid rgba(220, 38, 38, 0.3);
