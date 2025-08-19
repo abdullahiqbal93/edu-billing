@@ -43,7 +43,7 @@ public class CustomerDAO {
 
     public List<Customer> getAllCustomers() {
         List<Customer> customers = new ArrayList<>();
-        String query = "SELECT * FROM customers";
+        String query = "SELECT * FROM customers ORDER BY id DESC";
         try (PreparedStatement statement = conn.prepareStatement(query);
                 ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {

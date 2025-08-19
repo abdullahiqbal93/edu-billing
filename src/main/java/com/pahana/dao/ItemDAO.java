@@ -21,7 +21,7 @@ public class ItemDAO {
 
     public List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
-        String query = "SELECT * FROM items";
+        String query = "SELECT * FROM items ORDER BY id DESC";
         try (Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 

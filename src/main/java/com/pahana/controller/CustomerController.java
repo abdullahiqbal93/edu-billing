@@ -215,26 +215,37 @@ public class CustomerController extends HttpServlet {
         }
 
         if (error != null) {
+            Customer formCustomer = new Customer();
+
+            try {
+                formCustomer.setId(Integer.parseInt(idStr));
+            } catch (Exception ignored) {
+            }
+            
+            formCustomer.setAccountNumber(accountNumber);
+            formCustomer.setName(name);
+            formCustomer.setAddress(address);
+            formCustomer.setTelephone(telephone);
+            formCustomer.setEmail(email);
+
+            request.setAttribute("customer", formCustomer);
             request.setAttribute("error", error);
-            request.setAttribute("id", idStr);
-            request.setAttribute("accountNumber", accountNumber);
-            request.setAttribute("name", name);
-            request.setAttribute("address", address);
-            request.setAttribute("telephone", telephone);
-            request.setAttribute("email", email);
             request.getRequestDispatcher("WEB-INF/view/customer.jsp").forward(request, response);
             return;
         }
 
         Customer existingByAcc = customerService.findCustomerByAccountNumber(accountNumber);
         if (existingByAcc != null && existingByAcc.getId() != id) {
+            Customer formCustomer = new Customer();
+            formCustomer.setId(id);
+            formCustomer.setAccountNumber(accountNumber);
+            formCustomer.setName(name);
+            formCustomer.setAddress(address);
+            formCustomer.setTelephone(telephone);
+            formCustomer.setEmail(email);
+
+            request.setAttribute("customer", formCustomer);
             request.setAttribute("error", "Account number already exists.");
-            request.setAttribute("id", idStr);
-            request.setAttribute("accountNumber", accountNumber);
-            request.setAttribute("name", name);
-            request.setAttribute("address", address);
-            request.setAttribute("telephone", telephone);
-            request.setAttribute("email", email);
             request.getRequestDispatcher("WEB-INF/view/customer.jsp").forward(request, response);
             return;
         }

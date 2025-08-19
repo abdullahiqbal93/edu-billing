@@ -24,6 +24,33 @@ public class BillController extends HttpServlet {
             handleDelete(request, response);
             return;
         }
+        if ("view".equalsIgnoreCase(action)) {
+            String idStr = request.getParameter("id");
+            if (idStr != null) {
+                try {
+                    int billId = Integer.parseInt(idStr);
+                    Bill bill = BillService.getInstance().getBillWithItems(billId);
+                    if (bill != null) {
+                        request.setAttribute("bill", bill);
+                        String customerName = null;
+                        for (Customer c : customers) {
+                            if (c.getId() == bill.getCustomerId()) {
+                                customerName = c.getName();
+                                break;
+                            }
+                        }
+                        request.setAttribute("customerName", customerName);
+                    } else {
+                        request.setAttribute("error", "Bill not found.");
+                    }
+                } catch (NumberFormatException e) {
+                    request.setAttribute("error", "Invalid bill id.");
+                }
+            }
+            request.setAttribute("bills", BillService.getInstance().getAllBills());
+            request.getRequestDispatcher("/WEB-INF/view/bill.jsp").forward(request, response);
+            return;
+        }
 
         String customerIdStr = request.getParameter("customerId");
         if (customerIdStr != null && !customerIdStr.isEmpty()) {
@@ -70,31 +97,63 @@ public class BillController extends HttpServlet {
                     itemMap.put(it.getId(), it);
                 }
 
+                java.util.Map<Integer, Integer> requestedQty = new java.util.HashMap<>();
                 for (int i = 0; i < itemIds.length; i++) {
                     if (itemIds[i] == null || itemIds[i].isEmpty())
                         continue;
                     int itemId = Integer.parseInt(itemIds[i]);
-                    int qty = Integer.parseInt(quantities[i]);
-                    double up;
                     com.pahana.model.Item itemObj = itemMap.get(itemId);
                     if (itemObj == null) {
                         error = "Invalid item selected.";
                         break;
                     }
-                    up = itemObj.getPrice();
+                    if (quantities[i] == null || quantities[i].isEmpty()) {
+                        error = "Quantity is required.";
+                        break;
+                    }
+                    int qty = Integer.parseInt(quantities[i]);
                     if (qty <= 0) {
                         error = "Quantity must be positive.";
                         break;
                     }
-                    if (up < 0) {
-                        error = "Unit price must be non-negative.";
-                        break;
-                    }
-                    com.pahana.model.BillItem bi = new com.pahana.model.BillItem(0, 0, itemId, qty, up, up * qty);
-                    items.add(bi);
+                    requestedQty.put(itemId, requestedQty.getOrDefault(itemId, 0) + qty);
                 }
-                if (items.isEmpty() && error == null) {
-                    error = "Please add at least one valid item.";
+
+                if (error == null) {
+                    for (java.util.Map.Entry<Integer, Integer> e : requestedQty.entrySet()) {
+                        com.pahana.model.Item it = itemMap.get(e.getKey());
+                        int available = (it == null) ? 0 : it.getQuantity();
+                        if (e.getValue() > available) {
+                            String name = (it == null || it.getName() == null) ? ("#" + e.getKey()) : it.getName();
+                            error = "Requested quantity (" + e.getValue() + ") for '" + name
+                                    + "' exceeds available stock (" + available + ").";
+                            break;
+                        }
+                    }
+                }
+
+                if (error == null) {
+                    for (int i = 0; i < itemIds.length; i++) {
+                        if (itemIds[i] == null || itemIds[i].isEmpty())
+                            continue;
+                        int itemId = Integer.parseInt(itemIds[i]);
+                        int qty = Integer.parseInt(quantities[i]);
+                        com.pahana.model.Item itemObj = itemMap.get(itemId);
+                        if (itemObj == null) {
+                            error = "Invalid item selected.";
+                            break;
+                        }
+                        double up = itemObj.getPrice();
+                        if (up < 0) {
+                            error = "Unit price must be non-negative.";
+                            break;
+                        }
+                        com.pahana.model.BillItem bi = new com.pahana.model.BillItem(0, 0, itemId, qty, up, up * qty);
+                        items.add(bi);
+                    }
+                    if (items.isEmpty() && error == null) {
+                        error = "Please add at least one valid item.";
+                    }
                 }
             } catch (NumberFormatException e) {
                 error = "Invalid item inputs.";
@@ -113,11 +172,15 @@ public class BillController extends HttpServlet {
                 error = "Selected customer not found.";
             } else {
                 bill = BillService.getInstance().createBillWithItems(customerId, items);
-                request.setAttribute("bill", bill);
-                request.setAttribute("customerName", selected.getName());
-                List<Bill> bills = BillService.getInstance().getBillsByCustomerId(customerId);
-                request.setAttribute("bills", bills);
-                request.setAttribute("success", "Bill created successfully.");
+                if (bill == null) {
+                    error = "Insufficient stock for one or more items. Please refresh and try again.";
+                } else {
+                    request.setAttribute("bill", bill);
+                    request.setAttribute("customerName", selected.getName());
+                    List<Bill> bills = BillService.getInstance().getBillsByCustomerId(customerId);
+                    request.setAttribute("bills", bills);
+                    request.setAttribute("success", "Bill created successfully.");
+                }
             }
         }
 
