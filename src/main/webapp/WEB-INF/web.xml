@@ -77,6 +77,11 @@
     <servlet-name>EmailController</servlet-name>
     <servlet-class>com.pahana.controller.EmailController</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>ReportController</servlet-name>
+    <servlet-class>com.pahana.controller.ReportController</servlet-class>
+  </servlet>
   
 
   <servlet-mapping>
@@ -122,5 +127,10 @@
   <servlet-mapping>
     <servlet-name>EmailController</servlet-name>
     <url-pattern>/email/receipt</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ReportController</servlet-name>
+    <url-pattern>/report</url-pattern>
   </servlet-mapping>
 </web-app>

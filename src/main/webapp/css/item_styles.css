@@ -85,7 +85,7 @@ body {
     background: transparent;
     border: 1px solid #333;
     color: #888;
-    padding: 12px 24px;
+    padding: 18px 24px;
     border-radius: 12px;
     text-decoration: none;
     font-size: 14px;
@@ -94,6 +94,12 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.pdf-btn{
+    font-size: 16px !important;
+    text-decoration: none;
+    white-space: nowrap !important;
 }
 
 .back-btn:hover {
@@ -175,7 +181,7 @@ body {
     border: none;
     border-radius: 12px;
     color: #ffffff;
-    padding: 12px 24px !important;
+    padding: 18px 24px !important;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
