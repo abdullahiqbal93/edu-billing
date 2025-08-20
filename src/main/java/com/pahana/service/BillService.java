@@ -3,6 +3,7 @@ package com.pahana.service;
 import com.pahana.dao.BillDAO;
 import com.pahana.model.Bill;
 import com.pahana.model.BillItem;
+import java.sql.SQLException;
 import java.util.List;
 
 public class BillService {
@@ -101,23 +102,17 @@ public class BillService {
         Bill bill = new Bill(0, customerId, totalUnits, totalAmount, null);
         int billId = billDAO.addBill(bill);
         if (billId > 0) {
-            billDAO.addBillItems(billId, items);
+            try {
+                billDAO.addBillItems(billId, items);
 
-            com.pahana.dao.ItemDAO itemDAO = com.pahana.dao.ItemDAO.getInstance();
-            boolean stockOk = true;
-            for (BillItem bi : items) {
-                if (!itemDAO.decrementStock(bi.getItemId(), bi.getQuantity())) {
-                    stockOk = false;
-                    break;
+                bill = billDAO.getBillById(billId);
+                if (bill == null) {
+                    bill = new Bill(billId, customerId, totalUnits, totalAmount, null);
                 }
-            }
-
-            bill = billDAO.getBillById(billId);
-            if (bill == null) {
-                bill = new Bill(billId, customerId, totalUnits, totalAmount, null);
-            }
-            bill.setItems(items);
-            if (!stockOk) {
+                bill.setItems(items);
+            } catch (SQLException e) {
+                billDAO.deleteBill(billId);
+                System.err.println("Stock validation failed: " + e.getMessage());
                 return null;
             }
         }

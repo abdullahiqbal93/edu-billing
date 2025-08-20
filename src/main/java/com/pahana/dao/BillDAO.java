@@ -78,7 +78,7 @@ public class BillDAO {
         return -1;
     }
 
-    public void addBillItems(int billId, List<BillItem> items) {
+    public void addBillItems(int billId, List<BillItem> items) throws SQLException {
         String sql = "INSERT INTO bill_items (bill_id, item_id, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             for (BillItem bi : items) {
@@ -90,8 +90,6 @@ public class BillDAO {
                 ps.addBatch();
             }
             ps.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -137,11 +135,51 @@ public class BillDAO {
         return null;
     }
 
-    public boolean deleteBill(int id) {
-        String sql = "DELETE FROM bills WHERE id = ?";
+    public List<Bill> getBillsByDateRange(String startDate, String endDate) {
+        List<Bill> bills = new ArrayList<>();
+        String sql = "SELECT * FROM bills WHERE created_at BETWEEN ? AND ? ORDER BY created_at DESC, id DESC";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
+            ps.setString(1, startDate);
+            ps.setString(2, endDate);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    bills.add(new Bill(
+                            rs.getInt("id"),
+                            rs.getInt("customer_id"),
+                            rs.getInt("total_units"),
+                            rs.getDouble("total_amount"),
+                            rs.getString("created_at")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bills;
+    }
+
+    public boolean deleteBill(int id) {
+        try (Connection transactionConn = DBConnectionFactory.getConnection()) {
+            if (transactionConn == null) {
+                return false;
+            }
+            
+            transactionConn.setAutoCommit(false);
+            
+            String deleteBillItemsSql = "DELETE FROM bill_items WHERE bill_id = ?";
+            try (PreparedStatement ps = transactionConn.prepareStatement(deleteBillItemsSql)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
+            
+            String deleteBillSql = "DELETE FROM bills WHERE id = ?";
+            try (PreparedStatement ps = transactionConn.prepareStatement(deleteBillSql)) {
+                ps.setInt(1, id);
+                int rowsAffected = ps.executeUpdate();
+                
+                transactionConn.commit();
+                return rowsAffected > 0;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

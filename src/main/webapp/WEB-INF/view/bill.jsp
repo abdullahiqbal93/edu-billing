@@ -275,6 +275,13 @@
         <div class="table-section">
             <div class="table-header">
                 <h2 class="table-title">Billing History</h2>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <label style="font-size:13px;color:#444">Start:</label>
+                    <input type="date" id="report-start" name="report-start" class="form-input" />
+                    <label style="font-size:13px;color:#444">End:</label>
+                    <input type="date" id="report-end" name="report-end" class="form-input" />
+                    <a href="#" id="download-sales-report" class="form-button pdf-btn">Download Sales Report</a>
+                </div>
             </div>
             <div class="table-wrapper">
                 <%
@@ -374,6 +381,18 @@
                 }
             }
         }
+    </script>
+    <script>
+        document.getElementById('download-sales-report').addEventListener('click', function (e) {
+            e.preventDefault();
+            const start = document.getElementById('report-start').value;
+            const end = document.getElementById('report-end').value;
+            let url = APP_CTX + '/report';
+            if (start && end) {
+                url += '?startDate=' + encodeURIComponent(start) + '&endDate=' + encodeURIComponent(end);
+            }
+            window.open(url, '_blank');
+        });
     </script>
 </body>
 </html>

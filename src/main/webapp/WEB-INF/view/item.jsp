@@ -69,6 +69,7 @@
                     <input type="text" name="q" class="form-input" placeholder="Search by name or description" value="<%= request.getAttribute("q") != null ? request.getAttribute("q") : (request.getParameter("q") != null ? request.getParameter("q") : "") %>" />
                     <button type="submit" class="form-button">Search</button>
                     <a href="item?action=list" class="back-btn">Clear</a>
+                    <a href="#" id="download-inventory-report" class="form-button pdf-btn" onclick="window.open('<%=request.getContextPath()%>/report?type=inventory','_blank');return false;">Download Inventory Report</a>
                 </div>
             </form>
         </div>
