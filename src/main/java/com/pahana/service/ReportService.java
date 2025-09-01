@@ -70,6 +70,9 @@ public class ReportService {
             float[] colWidths = {idW, custW, dateW, unitsW, amountW};
             float x = margin;
             NumberFormat currency = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
+            java.text.DecimalFormatSymbols symbols = ((java.text.DecimalFormat) currency).getDecimalFormatSymbols();
+            symbols.setCurrencySymbol("LKR ");
+            ((java.text.DecimalFormat) currency).setDecimalFormatSymbols(symbols);
 
             int pageNum = 1;
             float cellPadding = 6f;
@@ -308,6 +311,9 @@ public class ReportService {
             float y = media.getHeight() - margin;
 
             NumberFormat currency = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
+            java.text.DecimalFormatSymbols symbols = ((java.text.DecimalFormat) currency).getDecimalFormatSymbols();
+            symbols.setCurrencySymbol("LKR ");
+            ((java.text.DecimalFormat) currency).setDecimalFormatSymbols(symbols);
             float idW = 40f;
             float qtyW = 60f;
             float priceW = 90f;
