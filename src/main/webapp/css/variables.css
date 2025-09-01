@@ -1,0 +1,97 @@
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-button: linear-gradient(135deg, #667eea, #764ba2);
+  --bg-button-hover: linear-gradient(135deg, #5a6fd8, #6a4190);
+  --bg-error: rgba(220, 38, 38, 0.1);
+  --bg-decoration: rgba(102, 126, 234, 0.03);
+
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+  --text-accent: #ffffff;
+  --text-error: #dc2626;
+
+  --border-primary: #dee2e6;
+  --border-secondary: #ced4da;
+  --border-focus: #667eea;
+
+  --shadow-primary: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(102, 126, 234, 0.3);
+
+  --gradient-brand: linear-gradient(45deg, #667eea, #764ba2);
+  --gradient-text: linear-gradient(135deg, #212529, #495057);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: #111111;
+  --bg-input: #1a1a1a;
+  --bg-button: linear-gradient(135deg, #667eea, #764ba2);
+  --bg-button-hover: linear-gradient(135deg, #5a6fd8, #6a4190);
+  --bg-error: rgba(220, 38, 38, 0.1);
+  --bg-decoration: rgba(102, 126, 234, 0.03);
+
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #666666;
+  --text-accent: #ffffff;
+  --text-error: #ff6b6b;
+
+  --border-primary: #222222;
+  --border-secondary: #333333;
+  --border-focus: #667eea;
+
+  --shadow-primary: rgba(255, 255, 255, 0.1);
+  --shadow-hover: rgba(102, 126, 234, 0.3);
+
+  --gradient-brand: linear-gradient(45deg, #667eea, #764ba2);
+  --gradient-text: linear-gradient(135deg, #ffffff, #a0a0a0);
+}
+
+@media print {
+  :root {
+    --print-bg: #ffffff;
+    --print-text: #000000;
+    --print-border: #000000;
+    --print-border-light: #cccccc;
+  }
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  z-index: 10000;
+  box-shadow: 0 4px 12px var(--shadow-primary);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px var(--shadow-primary);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

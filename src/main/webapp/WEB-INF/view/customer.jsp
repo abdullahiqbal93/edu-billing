@@ -11,6 +11,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Customer Management - Pahana Edu Bookshop</title>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/variables.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/customer_styles.css">
 </head>
 <body>
@@ -156,5 +157,7 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="<%=request.getContextPath()%>/js/theme.js"></script>
 </body>
 </html>

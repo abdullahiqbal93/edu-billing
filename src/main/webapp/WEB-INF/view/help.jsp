@@ -6,6 +6,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Help - Pahana Edu Bookshop</title>
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/variables.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/help_styles.css">
     </head>
 
@@ -121,6 +122,8 @@
                 </div>
             </div>
         </div>
+
+        <script src="<%=request.getContextPath()%>/js/theme.js"></script>
     </body>
 
     </html>
