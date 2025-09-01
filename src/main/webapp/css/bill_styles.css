@@ -7,8 +7,8 @@
 body {
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont,
         'Segoe UI', system-ui, sans-serif;
-    background: #0a0a0a;
-    color: #ffffff;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     min-height: 100vh;
     padding: 20px;
 }
@@ -82,8 +82,8 @@ body {
 
 .back-btn {
     background: transparent;
-    border: 1px solid #333;
-    color: #888;
+    border: 1px solid var(--border-secondary);
+    color: var(--text-secondary);
     padding: 12px 24px;
     border-radius: 12px;
     text-decoration: none;
@@ -102,8 +102,8 @@ body {
 }
 
 .form-section {
-    background: #111111;
-    border: 1px solid #222222;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 20px;
     padding: 32px;
     margin-bottom: 32px;
@@ -123,7 +123,7 @@ body {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 24px;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .form-grid {
@@ -141,10 +141,10 @@ body {
 .form-input {
     width: 100%;
     padding: 16px 20px;
-    background: #1a1a1a;
-    border: 1px solid #333333;
+    background: var(--bg-input);
+    border: 1px solid var(--border-secondary);
     border-radius: 12px;
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 16px;
     font-weight: 400;
     transition: all 0.3s ease;
@@ -152,27 +152,27 @@ body {
 }
 
 .form-select option {
-    background: #1a1a1a;
-    color: #ffffff;
+    background: var(--bg-input);
+    color: var(--text-primary);
     padding: 8px;
 }
 
 .form-input::placeholder {
-    color: #666;
+    color: var(--text-muted);
 }
 
 .form-select:focus,
 .form-input:focus {
-    border-color: #667eea;
+    border-color: var(--border-focus);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    background: #222222;
+    background: var(--bg-input);
 }
 
 .form-button {
     background: linear-gradient(135deg, #667eea, #764ba2);
     border: none;
     border-radius: 12px;
-    color: #ffffff;
+    color: var(--text-accent);
     padding: 16px 32px;
     font-size: 16px;
     font-weight: 600;
@@ -224,8 +224,8 @@ body {
 }
 
 .bill-section {
-    background: #111111;
-    border: 1px solid #222222;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 20px;
     overflow: hidden;
     position: relative;
@@ -250,7 +250,7 @@ body {
     text-align: center;
     margin-bottom: 32px;
     padding-bottom: 24px;
-    border-bottom: 2px solid #222222;
+    border-bottom: 2px solid var(--border-primary);
 }
 
 .receipt-header {
@@ -277,7 +277,7 @@ body {
 .bill-title {
     font-size: 28px;
     font-weight: 700;
-    background: linear-gradient(135deg, #ffffff, #a0a0a0);
+    background: linear-gradient(135deg, #3c3c3c, #a0a0a0);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -286,7 +286,7 @@ body {
 }
 
 .bill-subtitle {
-    color: #888;
+    color: var(--text-secondary);
     font-size: 16px;
     font-weight: 500;
 }
@@ -302,18 +302,18 @@ body {
 }
 
 .receipt-meta {
-    border: 1px solid #222;
+    border: 1px solid var(--border-primary);
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 16px;
-    background: #0f0f0f;
+    background: var(--bg-secondary);
 }
 
 .meta-row {
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
-    border-bottom: 1px dashed #222;
+    border-bottom: 1px dashed var(--border-secondary);
 }
 
 .meta-row:last-child {
@@ -321,12 +321,12 @@ body {
 }
 
 .meta-label {
-    color: #aaa;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
 .meta-value {
-    color: #fff;
+    color: var(--text-primary);
     font-weight: 600;
 }
 
@@ -335,7 +335,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 16px 0;
-    border-bottom: 1px solid #222222;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .bill-item:last-child {
@@ -344,13 +344,13 @@ body {
 
 .bill-label {
     font-weight: 600;
-    color: #888;
+    color: var(--text-secondary);
     font-size: 15px;
 }
 
 .bill-value {
     font-weight: 500;
-    color: #ffffff;
+    color: var(--text-primary);
     font-size: 15px;
 }
 
@@ -373,7 +373,7 @@ body {
 
 .receipt-totals {
     margin-top: 12px;
-    border-top: 2px solid #222;
+    border-top: 2px solid var(--border-primary);
     padding-top: 12px;
 }
 
@@ -384,27 +384,27 @@ body {
 }
 
 .total-row .total-label {
-    color: #bbb;
+    color: var(--text-secondary);
 }
 
 .total-row .total-value {
-    color: #fff;
+    color: var(--text-primary);
     font-weight: 700;
 }
 
 .total-row.grand {
-    border-top: 1px dashed #333;
+    border-top: 1px dashed var(--border-secondary);
     margin-top: 6px;
     padding-top: 12px;
 }
 
 .total-row.grand .total-label {
-    color: #d0d4ff;
+    color: #6370ff;
     font-weight: 700;
 }
 
 .total-row.grand .total-value {
-    color: #aeb8ff;
+    color: #6370ff;
     font-size: 18px;
 }
 
@@ -441,7 +441,7 @@ body {
     background: linear-gradient(135deg, #28a745, #20c997);
     border: none;
     border-radius: 12px;
-    color: #ffffff;
+    color: var(--text-accent);
     padding: 16px 32px;
     font-size: 16px;
     font-weight: 600;
@@ -474,32 +474,32 @@ body {
 }
 
 .modal-content {
-    background: #111111;
-    border: 1px solid #222222;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 16px;
     max-width: 640px;
     width: 96%;
     max-height: 90vh;
     overflow: auto;
     position: relative;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px var(--shadow-primary);
 }
 
 .modal-close {
     position: absolute;
     top: 10px;
     right: 10px;
-    border: 1px solid #333;
-    background: #1a1a1a;
-    color: #ccc;
+    border: 1px solid var(--border-secondary);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
     border-radius: 8px;
     padding: 6px 10px;
     cursor: pointer;
 }
 
 .modal-close:hover {
-    color: #fff;
-    border-color: #555;
+    color: var(--text-primary);
+    border-color: var(--border-primary);
 }
 
 @media (max-width: 768px) {
@@ -548,8 +548,8 @@ body {
     }
 
     body {
-        background: white;
-        color: black;
+        background: var(--print-bg);
+        color: var(--print-text);
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
         font-size: 10pt;
@@ -564,8 +564,8 @@ body {
     }
 
     .bill-section {
-        background: white;
-        border: 1px solid #000;
+        background: var(--print-bg);
+        border: 1px solid var(--print-border);
         border-radius: 0;
         box-shadow: none;
         margin: 0;
@@ -607,7 +607,7 @@ body {
     .bill-header {
         margin-bottom: 12pt;
         padding-bottom: 8pt;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid var(--print-border);
     }
 
     .bill-logo {
@@ -641,12 +641,12 @@ body {
     }
 
     .bill-logo {
-        background: #000;
-        color: white;
+        background: var(--print-border);
+        color: var(--print-bg);
     }
 
     .bill-title {
-        color: black;
+        color: var(--print-text);
         background: none;
         -webkit-text-fill-color: initial;
     }
@@ -658,22 +658,22 @@ body {
 
     .bill-label,
     .bill-value {
-        color: black;
+        color: var(--print-text);
     }
 
     .table-section,
     .table-header {
-        background: white !important;
+        background: var(--print-bg) !important;
         border: none;
     }
 
     .table-header {
         padding: 0 0 4pt 0;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid var(--print-border);
     }
 
     .table-title {
-        color: #000;
+        color: var(--print-text);
     }
 
     .table-wrapper {
@@ -696,15 +696,15 @@ body {
     }
 
     .data-table thead th {
-        background: #fff !important;
-        color: #000 !important;
-        border-bottom: 1px solid #000;
+        background: var(--print-bg) !important;
+        color: var(--print-text) !important;
+        border-bottom: 1px solid var(--print-border);
         position: static !important;
     }
 
     .data-table th,
     .data-table td {
-        color: #000 !important;
+        color: var(--print-text) !important;
         padding: 6pt;
     }
 
@@ -723,12 +723,12 @@ body {
 
     .bill-total {
         background: #f0f0f0;
-        border: 1px solid #000;
+        border: 1px solid var(--print-border);
     }
 
     .bill-total .bill-label,
     .bill-total .bill-value {
-        color: black;
+        color: var(--print-text);
     }
 
     .print-button {
@@ -736,25 +736,25 @@ body {
     }
 
     .receipt-meta {
-        border: 1px solid #000;
-        background: #fff;
+        border: 1px solid var(--print-border);
+        background: var(--print-bg);
     }
 
     .meta-label {
-        color: #000;
+        color: var(--print-text);
     }
 
     .meta-value {
-        color: #000;
+        color: var(--print-text);
     }
 
     .receipt-totals {
-        border-top: 2px solid #000;
+        border-top: 2px solid var(--print-border);
     }
 
     .total-row .total-label,
     .total-row .total-value {
-        color: #000;
+        color: var(--print-text);
     }
 
     .receipt-header,
@@ -815,8 +815,8 @@ body {
 }
 
 .table-section {
-    background: #111111;
-    border: 1px solid #222222;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 20px;
     overflow: hidden;
     position: relative;
@@ -832,14 +832,14 @@ body {
 
 .table-header {
     padding: 24px 32px;
-    border-bottom: 1px solid #222222;
-    background: #0f0f0f;
+    border-bottom: 1px solid var(--border-primary);
+    background: var(--bg-secondary);
 }
 
 .table-title {
     font-size: 20px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-primary);
     margin-bottom: 20px;
 
 }
@@ -859,26 +859,26 @@ body {
     position: sticky;
     top: 0;
     z-index: 1;
-    background: #0f0f0f;
+    background: var(--bg-secondary);
     padding: 16px 20px;
     text-align: left;
     font-weight: 600;
-    color: #888;
+    color: var(--text-secondary);
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid #222222;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .data-table td {
     padding: 16px 20px;
-    border-bottom: 1px solid #1a1a1a;
-    color: #ffffff;
+    border-bottom: 1px solid var(--border-secondary);
+    color: var(--text-primary);
     font-size: 15px;
 }
 
 .data-table tr:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-tertiary);
 }
 
 .actions {
@@ -902,7 +902,7 @@ body {
 .view-btn {
     background: linear-gradient(135deg, #2563eb, #0ea5e9) !important;
     border: none !important;
-    color: #ffffff !important;
+    color: var(--text-accent) !important;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 
@@ -943,7 +943,7 @@ body {
 
 .table-wrapper,
 .scroll-body {
-    scrollbar-color: #444 #0f0f0f;
+    scrollbar-color: var(--border-secondary) var(--bg-secondary);
     scrollbar-width: thin;
 }
 
@@ -955,15 +955,15 @@ body {
 
 .table-wrapper::-webkit-scrollbar-track,
 .scroll-body::-webkit-scrollbar-track {
-    background: #0f0f0f;
-    border: 1px solid #222222;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
 }
 
 .table-wrapper::-webkit-scrollbar-thumb,
 .scroll-body::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(102, 126, 234, 0.35), rgba(118, 75, 162, 0.35)), #333333;
-    border: 1px solid #3a3a3a;
+    background: linear-gradient(180deg, rgba(102, 126, 234, 0.35), rgba(118, 75, 162, 0.35)), var(--border-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
 }
 

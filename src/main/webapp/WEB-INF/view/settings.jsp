@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>User Settings - Pahana Edu Bookshop</title>
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/variables.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/dashboard_styles.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/css/settings_styles.css">
 </head>
@@ -246,5 +247,7 @@
             }
         });
     </script>
+
+    <script src="<%=request.getContextPath()%>/js/theme.js"></script>
 </body>
 </html>

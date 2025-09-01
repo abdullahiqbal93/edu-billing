@@ -6,6 +6,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Login - Pahana Edu Bookshop</title>
+		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/variables.css">
 		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/login_styles.css">
 	</head>
 
@@ -41,6 +42,8 @@
 				</div>
 				<% } %>
 		</div>
+
+		<script src="<%=request.getContextPath()%>/js/theme.js"></script>
 	</body>
 
 	</html>

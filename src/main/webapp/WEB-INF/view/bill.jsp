@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Billing - Pahana Edu Bookshop</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/variables.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bill_styles.css">
     <script>
         function printBill() { window.print(); }
@@ -394,5 +395,7 @@
             window.open(url, '_blank');
         });
     </script>
+
+    <script src="<%=request.getContextPath()%>/js/theme.js"></script>
 </body>
 </html>
